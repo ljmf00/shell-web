@@ -1,7 +1,9 @@
 html {
 	background: black;
+	height: 100%;
 }
 
-#terminal {
-	margin: 0;
+pre#terminal.terminal {
+	margin: 0px;
+	height: 100%;
 }
