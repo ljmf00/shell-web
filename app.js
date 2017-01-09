@@ -1,4 +1,10 @@
-require([''], function () {
+requirejs.config({
+    paths: {
+        'jquery': 'lib/jquery',
+    }
+});
+
+require([''], function ($) {
 	$(document).click(function () {
 		$("pre#terminal").focus();
 		$("pre#terminal").click();
@@ -51,7 +57,7 @@ require([''], function () {
 	var cmdobj = $.terminal.parse_command(c);
 		switch (cmdobj.name) {
 			case 'ping':
-				t.echo("pong");	
+				t.echo("pong");
 				break;
 			case '':
 				t.echo('');
