@@ -1,10 +1,13 @@
 requirejs.config({
     paths: {
         'jquery': 'lib/jquery',
+        'jquery-terminal': 'lib/jquery/ext-terminal',
+        'jquery-terminal-unixformatter': 'lib/jquery/ext-terminal/ext-unix-formatter',
+        'jquery-mousewheel': 'lib/jquery/ext-mousewheel'
     }
 });
 
-require([''], function ($) {
+require(['jquery', 'jquery-terminal', 'jquery-mousewheel', 'jquery-terminal-unixformatter'], function ($) {
 	$(document).click(function () {
 		$("pre#terminal").focus();
 		$("pre#terminal").click();
