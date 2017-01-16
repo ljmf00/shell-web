@@ -9,9 +9,16 @@ requirejs.config({
         'jquery-terminal': 'lib/jquery/ext-terminal',
         'jquery-terminal-unixformatter': 'lib/jquery/ext-terminal/ext-unix-formatter',
         'jquery-mousewheel': 'lib/jquery/ext-mousewheel',
-        'shell': 'js/shell'
+        'shell': 'js/shell',
+        'misc-rainbow': 'js/misc/rainbow'
     },
     waitSeconds: 0
+});
+
+var randomGreetings;
+
+require(['misc-rainbow'], function() {
+    randomGreetings = toRainbow(' ┌─┐┬ ┬┌─┐┬  ┬   ┬ ┬┌─┐┌┐ \n └─┐├─┤├┤ │  │───│││├┤ ├┴┐\n └─┘┴ ┴└─┘┴─┘┴─┘ └┴┘└─┘└─┘\n', Math.floor((Math.random() * 4)), 4);
 });
 
 require([
@@ -67,7 +74,7 @@ require([
                 if (!buffered) SwitchCommands(cmd, term);
                 $("html").scrollTop($("pre#terminal.terminal").height());
             }, {
-                greetings: '┬  ┌─┐┌─┐┌─┐┬─┐┬─┐┌─┐┬┬─┐┌─┐  ┌─┐┬ ┬┌─┐┬  ┬\n│  └─┐├┤ ├┤ ├┬┘├┬┘├┤ │├┬┘├─┤  └─┐├─┤├┤ │  │\n┴─┘└─┘└  └─┘┴└─┴└─└─┘┴┴└─┴ ┴  └─┘┴ ┴└─┘┴─┘┴─┘\n',
+                greetings: randomGreetings,
                 name: 'shell',
                 prompt: '$ '
             });
@@ -75,8 +82,8 @@ require([
 
         function SwitchCommands(c, t) {
             var cmdobj = $.terminal.parse_command(c);
-            require(['shell'], function(){
-                shell.commands(cmdobj.name, t, c);
+            require(['shell'], function() {
+                shell.commands(cmdobj, t, c);
             });
         }
     });
