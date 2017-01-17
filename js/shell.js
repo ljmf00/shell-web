@@ -1,6 +1,22 @@
-var shell = {
-    commands: function(cmdobj, t, c) {
+var Shell = {
+    TerminalObj: {
+        Command: null, // Defined by $.terminal instance
+        Terminal: null // Defined by $.terminal instance
+    },
+    TerminalVar: {
+        Command: null // Defined by $.terminal instance
+    },
+    Greetings: null,
+    currentServer: 'client-side',
+    currentUser: 'guest',
+    currentPath: '~',
+    SwitchCommands: function(cmdobj, t, c) {
         switch (cmdobj.name) {
+            case 'help':
+                require(['js/modules/help'], function() {
+                    showHelp(t, c, cmdobj);
+                });
+                break;
             case 'ping':
                 t.echo("pong");
                 break;
@@ -34,5 +50,12 @@ var shell = {
             default:
                 t.error('shell: command not found: ' + cmdobj.name);
         }
+    },
+    Prompt: function() {
+        return this.currentServer + '@' + this.currentUser + ': ' + this.currentPath + '$ ';
     }
 };
+
+require(['misc-rainbow'], function() {
+    Shell.Greetings = rainbowString(' ┌─┐┬ ┬┌─┐┬  ┬   ┬ ┬┌─┐┌┐ \n └─┐├─┤├┤ │  │───│││├┤ ├┴┐\n └─┘┴ ┴└─┘┴─┘┴─┘ └┴┘└─┘└─┘\n', 4, null, true) + rainbowString('A Powerful, Secure and Web-based Shell', 1, null, false, true) + '\n';
+});

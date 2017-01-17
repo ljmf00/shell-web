@@ -15,15 +15,15 @@ requirejs.config({
     waitSeconds: 0
 });
 
-var randomGreetings;
+// TODO: Fix dependencies
 
-require(['misc-rainbow'], function() {
-    randomGreetings = toRainbow(' ┌─┐┬ ┬┌─┐┬  ┬   ┬ ┬┌─┐┌┐ \n └─┐├─┤├┤ │  │───│││├┤ ├┴┐\n └─┘┴ ┴└─┘┴─┘┴─┘ └┴┘└─┘└─┘\n', Math.floor((Math.random() * 4)), 4);
+require(['shell'], function(){
+    // Nothing here
 });
 
 require([
     'css!styles/main',
-    'css!lib/jquery/ext-terminal'
+    'css!jquery-terminal'
 ], function() {
     require([
         'jquery',
@@ -31,7 +31,6 @@ require([
         'jquery-terminal',
         'jquery-terminal-unixformatter'
     ], function($) {
-        // Nothing here!
         $(document).click(function() {
             $("pre#terminal").focus();
             $("pre#terminal").click();
@@ -45,6 +44,10 @@ require([
 
         jQuery(function($, undefined) {
             $('#terminal').terminal(function(cmd, term) {
+                Shell.TerminalObj.Terminal = term;
+                Shell.TerminalObj.Command = $.terminal.parse_command(cmd);
+                Shell.TerminalVar.Command = cmd;
+                term.set_prompt(Shell.Prompt());
                 var buffered = false;
                 if ((cmd.charAt(cmd.length - 1) == '\\') && !(cmd.charAt(cmd.length - 2) == '\\')) {
                     buffered = true;
@@ -74,17 +77,14 @@ require([
                 if (!buffered) SwitchCommands(cmd, term);
                 $("html").scrollTop($("pre#terminal.terminal").height());
             }, {
-                greetings: randomGreetings,
+                greetings: Shell.Greetings,
                 name: 'shell',
-                prompt: '$ '
+                prompt: Shell.Prompt()
             });
         });
 
         function SwitchCommands(c, t) {
-            var cmdobj = $.terminal.parse_command(c);
-            require(['shell'], function() {
-                shell.commands(cmdobj, t, c);
-            });
+            Shell.commands(cmdobj, t, c);
         }
     });
 });
