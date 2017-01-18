@@ -59,7 +59,7 @@ require([
                         } else {
                             buffer += cmd.substr(0, cmd.length - 1);
                             cmd = buffer;
-                            SwitchCommands(cmd, term);
+                            Shell.SwitchCommands(Shell.TerminalObj.Command, term, cmd);
                             buffered = false;
                             term.pop();
                         }
@@ -74,7 +74,7 @@ require([
                         cmd = cmd.substr(0, cmd.length - 1);
                     }
                 }
-                if (!buffered) SwitchCommands(cmd, term);
+                if (!buffered) Shell.SwitchCommands(Shell.TerminalObj.Command, term, cmd);
                 $("html").scrollTop($("pre#terminal.terminal").height());
             }, {
                 greetings: Shell.Greetings,
@@ -82,9 +82,5 @@ require([
                 prompt: Shell.Prompt()
             });
         });
-
-        function SwitchCommands(c, t) {
-            Shell.commands(cmdobj, t, c);
-        }
     });
 });
