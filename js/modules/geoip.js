@@ -1,4 +1,4 @@
-function getIPInfo(t, ip = '') {
+function getGeoIPAPIInfo(t, ip = '') {
     $.ajaxSetup({
         async: false
     });

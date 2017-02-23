@@ -1,4 +1,4 @@
-/// "app.js" -*- JavaScript -*-
+/// "js/shell/main.js" -*- JavaScript -*-
 ///  Web-based Shell in Javascript
 ///    _________.__           .__  .__             __      __      ___.
 ///   /   _____/|  |__   ____ |  | |  |           /  \    /  \ ____\_ |__
@@ -12,31 +12,3 @@
 /// This file is part of the Shell-Web. This framework is free
 /// software; you can redistribute it and/or modify it under the
 /// terms of the GNU Lesser General Public License, v3.
-
-requirejs.config({
-    map: {
-        '*': {
-            //RequireJS Plugins
-            'css': 'lib/require/css',
-            'async': 'lib/require/async'
-        }
-    },
-    paths: {
-        //jQuery Libraries
-        'jquery': 'lib/jquery',
-        'jquery/terminal': 'lib/jquery/ext-terminal',
-        'jquery/terminal-unixformatter': 'lib/jquery/ext-terminal/ext-unix-formatter',
-        'jquery/mousewheel': 'lib/jquery/ext-mousewheel',
-
-        //Modules
-        'module/rainbow': 'js/modules/rainbow',
-        'module/geoip': 'js/modules/geoip',
-
-        //Shell
-        'shell': 'js/shell',
-        'shell/main':'js/shell/main'
-    },
-    waitSeconds: 0
-});
-
-require(['async!js/main.js']);
